@@ -72,3 +72,4 @@ export async function deleteShopFromCloud(shopId) {
     console.error("Cloud delete error:", e);
   }
 }
+

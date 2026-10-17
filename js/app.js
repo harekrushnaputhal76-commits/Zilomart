@@ -878,3 +878,4 @@ if (vendorWorkspace || adminWorkspace) {
   loadVendorShops();
   renderAdminTable();
 }
+
