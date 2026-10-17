@@ -1,9 +1,6 @@
 // ============================================================================
-// ZILOMARKET STEP 3: FIREBASE FIRESTORE CLOUD SYNC ENGINE
+// ZILOMARKET PRODUCTION FIREBASE FIRESTORE & AUTH ENGINE
 // ============================================================================
-
-// Live Firebase Cloud Sync enabled with project zilomarket-f41e2
-export const ENABLE_FIREBASE_CLOUD = true;
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDkAgJRv5IMMUsq5nVB5WlSwaVCIaaRdx4",
@@ -15,61 +12,141 @@ export const firebaseConfig = {
   measurementId: "G-NQJSDWMZSB"
 };
 
-let db = null;
-let firestoreFns = null;
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  arrayUnion,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-export async function initCloudDB() {
-  if (!ENABLE_FIREBASE_CLOUD) return false;
-  try {
-    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
-    const { getFirestore, collection, getDocs, setDoc, doc, deleteDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
-    const app = initializeApp(firebaseConfig);
-    db = getFirestore(app);
-    firestoreFns = { collection, getDocs, setDoc, doc, deleteDoc };
-    console.log("✔ ZiloMarket Connected to Firebase Firestore");
-    return true;
-  } catch (err) {
-    console.warn("Using LocalStorage fallback (Firebase initialization failed or offline):", err);
-    return false;
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+
+// 1. Real Firebase Signup + Role Profile + Optional Shop Creation
+export async function registerUserWithRole(email, password, role, shopDetails = null) {
+  const cred = await createUserWithEmailAndPassword(auth, email, password);
+  const uid = cred.user.uid;
+
+  await setDoc(doc(db, "users", uid), {
+    uid,
+    email,
+    role,
+    createdAt: serverTimestamp()
+  });
+
+  if (role === "business" && shopDetails) {
+    const shopId = "shop_" + uid.slice(0, 8) + "_" + Date.now();
+    await setDoc(doc(db, "shops", shopId), {
+      id: shopId,
+      ownerUid: uid,
+      ownerEmail: email,
+      name: shopDetails.name,
+      category: shopDetails.category,
+      distance: Number(shopDetails.distance || 1.0),
+      featuredItem: shopDetails.featuredItem,
+      startingPrice: Number(shopDetails.startingPrice || 0),
+      unit: shopDetails.unit || "direct rate",
+      location: shopDetails.location,
+      phone: shopDetails.phone || "919800000000",
+      verified: false, // Team/Admin verifies real shops
+      createdAt: serverTimestamp(),
+      products: [
+        {
+          id: "prod_" + Date.now(),
+          name: shopDetails.featuredItem,
+          price: Number(shopDetails.startingPrice || 0),
+          mrp: Number(shopDetails.mrp || shopDetails.startingPrice || 0),
+          unit: shopDetails.unit || "standard pack",
+          moq: shopDetails.moq || "1 unit"
+        }
+      ]
+    });
   }
+
+  return { uid, email, role };
 }
 
-export async function syncShopsFromCloud(fallbackShops) {
-  if (!ENABLE_FIREBASE_CLOUD || !db) return fallbackShops;
-  try {
-    const snap = await firestoreFns.getDocs(firestoreFns.collection(db, "shops"));
-    if (snap.empty) {
-      // Seed initial shops to Firestore on first run
-      for (const shop of fallbackShops) {
-        await firestoreFns.setDoc(firestoreFns.doc(db, "shops", shop.id), shop);
-      }
-      return fallbackShops;
+// 2. Real Firebase Sign-In + Fetch User Role from Firestore
+export async function loginUser(email, password) {
+  const cred = await signInWithEmailAndPassword(auth, email, password);
+  const userSnap = await getDoc(doc(db, "users", cred.user.uid));
+  const userData = userSnap.exists() ? userSnap.data() : { role: "user" };
+  return {
+    uid: cred.user.uid,
+    email: cred.user.email,
+    role: userData.role || "user"
+  };
+}
+
+// 3. Real Session Listener
+export function watchUserSession(callback) {
+  return onAuthStateChanged(auth, async (firebaseUser) => {
+    if (!firebaseUser) {
+      callback(null);
+      return;
     }
-    const cloudShops = [];
-    snap.forEach(d => cloudShops.push(d.data()));
-    localStorage.setItem("zilo_shops_v2", JSON.stringify(cloudShops));
-    return cloudShops;
-  } catch (e) {
-    console.error("Cloud fetch error:", e);
-    return fallbackShops;
-  }
+    try {
+      const userSnap = await getDoc(doc(db, "users", firebaseUser.uid));
+      const role = userSnap.exists() ? userSnap.data().role : "user";
+      callback({ uid: firebaseUser.uid, email: firebaseUser.email, role });
+    } catch (e) {
+      console.warn("Could not load user role profile from Firestore:", e);
+      callback({ uid: firebaseUser.uid, email: firebaseUser.email, role: "user" });
+    }
+  });
 }
 
-export async function saveShopToCloud(shopObj) {
-  if (!ENABLE_FIREBASE_CLOUD || !db) return;
+// 4. Sign Out
+export async function logoutUser() {
+  await signOut(auth);
+}
+
+// 5. Fetch All Real Shops from Firestore
+export async function fetchLiveShops() {
   try {
-    await firestoreFns.setDoc(firestoreFns.doc(db, "shops", shopObj.id), shopObj);
-  } catch (e) {
-    console.error("Cloud save error:", e);
+    const snap = await getDocs(collection(db, "shops"));
+    const shops = [];
+    snap.forEach((d) => shops.push(d.data()));
+    return shops;
+  } catch (err) {
+    console.error("Error fetching live shops from Firestore:", err);
+    return [];
   }
 }
 
-export async function deleteShopFromCloud(shopId) {
-  if (!ENABLE_FIREBASE_CLOUD || !db) return;
-  try {
-    await firestoreFns.deleteDoc(firestoreFns.doc(db, "shops", shopId));
-  } catch (e) {
-    console.error("Cloud delete error:", e);
+// 6. Add Real Product to Vendor's Firestore Shop Document
+export async function addProductToShop(shopId, newProd, currentStartingPrice) {
+  const shopRef = doc(db, "shops", shopId);
+  const updates = {
+    products: arrayUnion(newProd)
+  };
+  if (Number(newProd.price) < Number(currentStartingPrice || Infinity)) {
+    updates.startingPrice = Number(newProd.price);
+    updates.featuredItem = newProd.name;
   }
+  await updateDoc(shopRef, updates);
 }
 
+// 7. Admin/Team Verify or Remove Shop in Firestore
+export async function updateShopVerification(shopId, verifiedState) {
+  await updateDoc(doc(db, "shops", shopId), { verified: verifiedState });
+}
+
+export async function removeShopFromDB(shopId) {
+  await deleteDoc(doc(db, "shops", shopId));
+}

@@ -6,16 +6,17 @@
   <title>Partner &amp; Admin Workspace — ZiloMarket</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
+  <!-- Top Real-Time District Utility Strip -->
   <div class="utility-bar">
     <div class="container-fluid utility-inner">
       <div class="location-pill">
         <span class="pulse-dot"></span>
-        <span id="dashRoleBanner">ZiloMarket Role Workspace</span>
+        <span id="dashRoleBanner">Verifying active session...</span>
       </div>
       <div class="utility-links">
         <a href="index.html" class="utility-link">← Back to 30km Live Marketplace</a>
@@ -31,19 +32,19 @@
           <div class="logo-mark">Z</div>
           <div class="logo-text">
             <span class="brand-name">ZiloMarket</span>
-            <span class="brand-tag" id="dashSubTag">CONSOLE</span>
+            <span class="brand-tag" id="dashSubTag">WORKSPACE</span>
           </div>
         </a>
       </div>
 
       <div class="sidebar-group">
-        <span class="sidebar-group-label">WORKSPACE NAVIGATION</span>
+        <span class="sidebar-group-label">WORKSPACE CONTROLS</span>
         <div class="line-nav-track" id="dashLineNav">
           <div class="line-indicator" id="dashLineIndicator"></div>
-          <button class="line-nav-item active" data-view="vendor" id="navBtnVendor">
+          <button type="button" class="line-nav-item active" data-view="vendor" id="navBtnVendor">
             <span>📦 Vendor Catalog Manager</span>
           </button>
-          <button class="line-nav-item" data-view="admin" id="navBtnAdmin">
+          <button type="button" class="line-nav-item" data-view="admin" id="navBtnAdmin">
             <span>🛡️ Team / Admin Verification</span>
           </button>
           <a href="index.html" class="line-nav-item">
@@ -53,64 +54,64 @@
       </div>
 
       <div class="sidebar-cta-box">
-        <button id="dashLogoutBtn" class="btn btn-outline btn-full">Sign Out of Portal</button>
+        <button id="dashLogoutBtn" class="btn btn-outline btn-full">Sign Out of Session</button>
       </div>
     </aside>
 
-    <!-- RIGHT WORKSPACE -->
+    <!-- RIGHT WORKSPACE VIEWPORT -->
     <div class="pro-viewport">
       <main class="dashboard-main">
 
-        <!-- BUSINESS / VENDOR PANEL -->
+        <!-- BUSINESS / VENDOR WORKSPACE PANEL -->
         <section id="vendorWorkspace" class="dash-section">
           <div class="dash-header">
             <span class="eyebrow-badge">VENDOR INVENTORY MANAGER</span>
-            <h2>Manage Your Sasta Price Catalog</h2>
-            <p>Add products and wholesale rates so buyers within 30 km can compare and order on WhatsApp.</p>
+            <h2>Manage Your Wholesale Catalog</h2>
+            <p>Publish products, pack sizes, and wholesale rates. Buyers within your 30 km district zone compare and order directly on WhatsApp.</p>
           </div>
 
           <div class="dash-grid">
             <div class="dash-card">
-              <h3>+ Add Product to Shop Catalog</h3>
+              <h3>+ Add New Product to Catalog</h3>
               <form id="addProductForm">
                 <div class="form-group">
-                  <label>Select Your Listed Shop</label>
+                  <label for="vendorShopSelect">Active Listed Shop</label>
                   <select id="vendorShopSelect" required></select>
                 </div>
 
                 <div class="form-group">
-                  <label>Product / Item Name</label>
-                  <input type="text" id="prodName" required placeholder="e.g., 12-Inch Silver Laminated Plate (100 pcs)" />
+                  <label for="prodName">Product / Item Name</label>
+                  <input type="text" id="prodName" required placeholder="e.g., 12-Inch Heavy Buffet Paper Plate (100 pcs)" />
                 </div>
 
                 <div class="form-row-2">
                   <div class="form-group">
-                    <label>Your ZiloMarket Price (₹)</label>
-                    <input type="number" id="prodPrice" required placeholder="e.g., 65" />
+                    <label for="prodPrice">Direct ZiloMarket Price (₹)</label>
+                    <input type="number" id="prodPrice" required placeholder="e.g., 65" min="1" step="0.5" />
                   </div>
                   <div class="form-group">
-                    <label>Normal Market MRP (₹)</label>
-                    <input type="number" id="prodMrp" required placeholder="e.g., 95" />
+                    <label for="prodMrp">Normal Market MRP (₹)</label>
+                    <input type="number" id="prodMrp" required placeholder="e.g., 95" min="1" step="0.5" />
                   </div>
                 </div>
 
                 <div class="form-row-2">
                   <div class="form-group">
-                    <label>Unit / Pack Size</label>
-                    <input type="text" id="prodUnit" required placeholder="e.g., per packet" />
+                    <label for="prodUnit">Unit / Pack Size</label>
+                    <input type="text" id="prodUnit" required placeholder="e.g., per pack of 100" />
                   </div>
                   <div class="form-group">
-                    <label>Min. Order Qty (MOQ)</label>
-                    <input type="text" id="prodMoq" required placeholder="e.g., 10 packets" />
+                    <label for="prodMoq">Min. Order Qty (MOQ)</label>
+                    <input type="text" id="prodMoq" required placeholder="e.g., 10 packs" />
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-full">Publish Item to 30km Radar</button>
+                <button type="submit" class="btn btn-primary btn-full" id="publishItemBtn">Publish Item to 30km Radar</button>
               </form>
             </div>
 
             <div class="dash-card">
-              <h3>Live Products in Selected Shop</h3>
+              <h3>Live Published Products</h3>
               <div id="vendorCatalogList" class="catalog-admin-list"></div>
             </div>
           </div>
@@ -119,18 +120,18 @@
         <!-- TEAM & ADMIN OPERATIONS PANEL -->
         <section id="adminWorkspace" class="dash-section" style="display: none;">
           <div class="dash-header">
-            <span class="eyebrow-badge">OPERATIONS &amp; MODERATION</span>
+            <span class="eyebrow-badge">DISTRICT AUDIT &amp; MODERATION</span>
             <h2>30km Zone Verification &amp; Shop Control</h2>
-            <p>Approve local manufacturers and verify wholesale sellers inside the district hub.</p>
+            <p>Approve local manufacturers, audit rates, and manage verified badges in Firestore.</p>
           </div>
 
           <div class="dash-card">
-            <h3>All Registered Businesses in 30km Radar</h3>
+            <h3>Registered Businesses in 30km Radar</h3>
             <div class="table-responsive">
               <table class="admin-table">
                 <thead>
                   <tr>
-                    <th>Business Name</th>
+                    <th>Business &amp; Owner</th>
                     <th>Category</th>
                     <th>Distance</th>
                     <th>Starting Deal</th>
@@ -151,4 +152,3 @@
   <script type="module" src="js/app.js"></script>
 </body>
 </html>
-

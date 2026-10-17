@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Unified 3D Portal Access — ZiloMarket</title>
+  <title>Unified Portal Access — ZiloMarket</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Three.js WebGL Engine for Reactive 3D Model -->
+  <!-- Three.js WebGL Engine for Reactive 3D Spatial Radar -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body class="pro-auth-body">
@@ -24,7 +24,7 @@
         <a href="index.html" class="brand-logo">
           <div class="logo-mark">Z</div>
           <div class="logo-text">
-            <span class="brand-name" style="color:#FFFFFF;">ZiloMarket</span>
+            <span class="brand-name">ZiloMarket</span>
             <span class="brand-tag" id="modelStatusTag">30KM SPATIAL ENGINE</span>
           </div>
         </a>
@@ -41,7 +41,7 @@
           </div>
           <div class="hud-bottom-row">
             <h3 id="hudRoleTitle">30km Price Discovery Radar</h3>
-            <p id="hudRoleDesc">Interactive spatial mesh scanning verified shops and lowest direct rates near Oupada &amp; Balasore.</p>
+            <p id="hudRoleDesc">Interactive spatial mesh scanning verified shops and direct factory rates in real-time.</p>
           </div>
         </div>
       </div>
@@ -49,8 +49,8 @@
       <!-- REACTBITS LINE SIDEBAR COMPONENT FOR ROLE SELECTION -->
       <div class="auth-line-sidebar-wrap">
         <div class="sidebar-group-header">
-          <span class="sidebar-group-label">SELECT PORTAL ROLE (REACTBITS LINE SIDEBAR)</span>
-          <span class="mono-text" style="font-size:11px; color:#64748B;">Keys: 1 - 4</span>
+          <span class="sidebar-group-label">SELECT PORTAL ROLE</span>
+          <span class="mono-text" style="font-size:11px; color:var(--text-muted);">Keys: 1 - 4</span>
         </div>
 
         <div class="line-nav-track auth-line-track" id="roleSelector">
@@ -95,7 +95,7 @@
               <span class="role-dot admin"></span>
               <div>
                 <div class="role-item-title">Admin Superconsole</div>
-                <div class="role-item-sub">Full 30km district control, moderation &amp; cloud sync</div>
+                <div class="role-item-sub">Full 30km district control, moderation &amp; live Firestore sync</div>
               </div>
             </div>
             <span class="mono-badge">PORTAL 04</span>
@@ -104,7 +104,7 @@
       </div>
     </aside>
 
-    <!-- RIGHT PANEL: REACTBITS SPOTLIGHT CARD + ANIMATED FORM -->
+    <!-- RIGHT PANEL: REACTBITS SPOTLIGHT CARD + AUTHENTICATION FORM -->
     <main class="pro-auth-card spotlight-card" id="authSpotlightCard">
       <div class="spotlight-glow"></div>
 
@@ -123,30 +123,14 @@
           <button type="button" class="seg-tab" id="tabRegister">Create Account / List Shop</button>
         </div>
 
-        <!-- 1-Click Quick Demo Bar (Senior Dev UX Touch) -->
-        <div class="quick-demo-bar">
-          <span class="demo-label">⚡ 1-CLICK DEMO ACCESS:</span>
-          <div class="demo-chips">
-            <button type="button" class="demo-chip" data-demo-role="business" data-demo-email="puthalpaperplate@zilomarket.in">
-              🏭 Puthal Paper Plate (Vendor)
-            </button>
-            <button type="button" class="demo-chip" data-demo-role="admin" data-demo-email="admin@zilomarket.in">
-              🛡️ Admin Superuser
-            </button>
-            <button type="button" class="demo-chip" data-demo-role="user" data-demo-email="buyer@zilomarket.in">
-              🛒 Local Buyer
-            </button>
-          </div>
-        </div>
-
-        <!-- Main Authentication & Shop Onboarding Form -->
+        <!-- Main Authentication & Shop Onboarding Form (100% Real Firebase Auth) -->
         <form id="authForm" class="pro-form">
 
           <!-- Dynamic Business Onboarding Drawer (Expands in Business + Register mode) -->
           <div id="businessExtraFields" class="hidden-fields pro-business-box">
             <div class="box-title-row">
               <span>🏭 NEW 30KM STORE / FACTORY ONBOARDING</span>
-              <span class="mono-badge">FREE LISTING</span>
+              <span class="mono-badge">FREE CLOUD LISTING</span>
             </div>
 
             <div class="form-group">
@@ -181,9 +165,15 @@
               </div>
             </div>
 
-            <div class="form-group" style="margin-bottom:0;">
-              <label>Landmark &amp; WhatsApp Contact</label>
-              <input type="text" id="shopLocation" placeholder="e.g., Oupada Main Road, Balasore" />
+            <div class="form-row-2">
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Shop Address / Landmark</label>
+                <input type="text" id="shopLocation" placeholder="e.g., Oupada Main Road, Balasore" />
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>WhatsApp Order Number (with 91)</label>
+                <input type="tel" id="shopPhone" placeholder="e.g., 919861000000" pattern="[0-9]{10,12}" />
+              </div>
             </div>
           </div>
 
@@ -200,19 +190,19 @@
               <button type="button" class="toggle-pass-btn" id="togglePassBtn">Show</button>
             </div>
             <div class="input-icon-wrap">
-              <input type="password" id="passwordInput" required placeholder="••••••••" minlength="6" value="zilo1234" />
+              <input type="password" id="passwordInput" required placeholder="Enter your password (min. 6 chars)" minlength="6" />
             </div>
           </div>
 
           <div id="authMessage" class="auth-message"></div>
 
           <button type="submit" class="btn btn-primary btn-full pro-submit-btn" id="submitBtn">
-            Sign In as CUSTOMER →
+            <span>Sign In as CUSTOMER →</span>
           </button>
         </form>
 
         <div class="pro-auth-footer">
-          <span class="mono-text">RBAC v3.5 • FIREBASE + LOCAL HYBRID</span>
+          <span class="mono-text">FIREBASE FIRESTORE LIVE ENGINE</span>
           <span>Encrypted 30km District Session</span>
         </div>
       </div>
@@ -223,4 +213,3 @@
   <script type="module" src="js/app.js"></script>
 </body>
 </html>
-
