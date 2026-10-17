@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unified 3D Portal Access — ZiloMarket</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Three.js WebGL Engine for Reactive 3D Model -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="pro-auth-body">
+
+  <!-- Ambient Grid Background -->
+  <div class="pro-auth-grid-bg"></div>
+
+  <div class="pro-auth-container">
+
+    <!-- LEFT PANEL: INTERACTIVE 3D MODEL + REACTBITS LINE SIDEBAR ROLE SWITCHER -->
+    <aside class="pro-auth-showcase">
+      <div class="showcase-top">
+        <a href="index.html" class="brand-logo">
+          <div class="logo-mark">Z</div>
+          <div class="logo-text">
+            <span class="brand-name" style="color:#FFFFFF;">ZiloMarket</span>
+            <span class="brand-tag" id="modelStatusTag">30KM SPATIAL ENGINE</span>
+          </div>
+        </a>
+        <a href="index.html" class="pro-back-pill">← Live Storefront</a>
+      </div>
+
+      <!-- REACTBITS 3D PERSPECTIVE TILT CARD + THREE.JS REACTIVE 3D CANVAS -->
+      <div class="tilt-3d-stage" id="tilt3DCard">
+        <canvas id="zilo3DCanvas"></canvas>
+        <div class="stage-hud-overlay">
+          <div class="hud-top-row">
+            <span class="hud-chip" id="hudRoleCode">NODE // CUSTOMER_RADAR</span>
+            <span class="hud-fps mono-text">60 FPS • WEBGL</span>
+          </div>
+          <div class="hud-bottom-row">
+            <h3 id="hudRoleTitle">30km Price Discovery Radar</h3>
+            <p id="hudRoleDesc">Interactive spatial mesh scanning verified shops and lowest direct rates near Oupada &amp; Balasore.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- REACTBITS LINE SIDEBAR COMPONENT FOR ROLE SELECTION -->
+      <div class="auth-line-sidebar-wrap">
+        <div class="sidebar-group-header">
+          <span class="sidebar-group-label">SELECT PORTAL ROLE (REACTBITS LINE SIDEBAR)</span>
+          <span class="mono-text" style="font-size:11px; color:#64748B;">Keys: 1 - 4</span>
+        </div>
+
+        <div class="line-nav-track auth-line-track" id="roleSelector">
+          <!-- Gliding Vertical Indicator Line -->
+          <div class="line-indicator" id="authRoleLineIndicator"></div>
+
+          <button type="button" class="line-nav-item role-btn active" data-role="user">
+            <div class="role-item-left">
+              <span class="role-dot customer"></span>
+              <div>
+                <div class="role-item-title">Customer Price Finder</div>
+                <div class="role-item-sub">Compare 30km sasta deals &amp; order on WhatsApp</div>
+              </div>
+            </div>
+            <span class="mono-badge">PORTAL 01</span>
+          </button>
+
+          <button type="button" class="line-nav-item role-btn" data-role="business">
+            <div class="role-item-left">
+              <span class="role-dot business"></span>
+              <div>
+                <div class="role-item-title">Business / Factory Vendor</div>
+                <div class="role-item-sub">List your shop, wholesale catalog &amp; direct factory prices</div>
+              </div>
+            </div>
+            <span class="mono-badge">PORTAL 02</span>
+          </button>
+
+          <button type="button" class="line-nav-item role-btn" data-role="team">
+            <div class="role-item-left">
+              <span class="role-dot team"></span>
+              <div>
+                <div class="role-item-title">ZiloMarket Team Verify</div>
+                <div class="role-item-sub">Inspect local shops, distances &amp; approve badges</div>
+              </div>
+            </div>
+            <span class="mono-badge">PORTAL 03</span>
+          </button>
+
+          <button type="button" class="line-nav-item role-btn" data-role="admin">
+            <div class="role-item-left">
+              <span class="role-dot admin"></span>
+              <div>
+                <div class="role-item-title">Admin Superconsole</div>
+                <div class="role-item-sub">Full 30km district control, moderation &amp; cloud sync</div>
+              </div>
+            </div>
+            <span class="mono-badge">PORTAL 04</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT PANEL: REACTBITS SPOTLIGHT CARD + ANIMATED FORM -->
+    <main class="pro-auth-card spotlight-card" id="authSpotlightCard">
+      <div class="spotlight-glow"></div>
+
+      <div class="auth-card-inner">
+        <!-- Header & Mode Switcher -->
+        <div class="auth-card-head">
+          <span class="eyebrow-badge" id="formRoleEyebrow">PORTAL 01 • CUSTOMER ACCESS</span>
+          <h1 id="formMainHeading">Sign in to ZiloMarket</h1>
+          <p id="formSubHeading">Access verified local wholesale &amp; factory prices within 30 km.</p>
+        </div>
+
+        <!-- ReactBits Animated Segmented Tabs -->
+        <div class="segmented-tabs" id="authModeTabs">
+          <div class="segmented-pill-bg" id="segmentedPillBg"></div>
+          <button type="button" class="seg-tab active" id="tabLogin">Sign In to Portal</button>
+          <button type="button" class="seg-tab" id="tabRegister">Create Account / List Shop</button>
+        </div>
+
+        <!-- 1-Click Quick Demo Bar (Senior Dev UX Touch) -->
+        <div class="quick-demo-bar">
+          <span class="demo-label">⚡ 1-CLICK DEMO ACCESS:</span>
+          <div class="demo-chips">
+            <button type="button" class="demo-chip" data-demo-role="business" data-demo-email="puthalpaperplate@zilomarket.in">
+              🏭 Puthal Paper Plate (Vendor)
+            </button>
+            <button type="button" class="demo-chip" data-demo-role="admin" data-demo-email="admin@zilomarket.in">
+              🛡️ Admin Superuser
+            </button>
+            <button type="button" class="demo-chip" data-demo-role="user" data-demo-email="buyer@zilomarket.in">
+              🛒 Local Buyer
+            </button>
+          </div>
+        </div>
+
+        <!-- Main Authentication & Shop Onboarding Form -->
+        <form id="authForm" class="pro-form">
+
+          <!-- Dynamic Business Onboarding Drawer (Expands in Business + Register mode) -->
+          <div id="businessExtraFields" class="hidden-fields pro-business-box">
+            <div class="box-title-row">
+              <span>🏭 NEW 30KM STORE / FACTORY ONBOARDING</span>
+              <span class="mono-badge">FREE LISTING</span>
+            </div>
+
+            <div class="form-group">
+              <label>Shop / Manufacturing Unit Name</label>
+              <input type="text" id="shopName" placeholder="e.g., Puthal Paper Plate Manufacturing" />
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label>Primary Category</label>
+                <select id="shopCategory">
+                  <option value="Manufacturing & Disposables">Manufacturing &amp; Disposables</option>
+                  <option value="Wholesale Grocery">Wholesale Grocery</option>
+                  <option value="Hardware & Building">Hardware &amp; Building</option>
+                  <option value="Electronics & Services">Electronics &amp; Services</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Distance from Hub (km)</label>
+                <input type="number" id="shopDistance" placeholder="e.g., 1.5" step="0.1" max="30" />
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label>Signature Sasta Deal Item</label>
+                <input type="text" id="featuredItem" placeholder="e.g., 12-Inch Silver Buffet Plate (100pc)" />
+              </div>
+              <div class="form-group">
+                <label>Direct Starting Price (₹)</label>
+                <input type="number" id="startingPrice" placeholder="e.g., 35" />
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:0;">
+              <label>Landmark &amp; WhatsApp Contact</label>
+              <input type="text" id="shopLocation" placeholder="e.g., Oupada Main Road, Balasore" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="emailInput">Work or Personal Email</label>
+            <div class="input-icon-wrap">
+              <input type="email" id="emailInput" required placeholder="name@zilomarket.in" autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="label-split">
+              <label for="passwordInput">Security Password</label>
+              <button type="button" class="toggle-pass-btn" id="togglePassBtn">Show</button>
+            </div>
+            <div class="input-icon-wrap">
+              <input type="password" id="passwordInput" required placeholder="••••••••" minlength="6" value="zilo1234" />
+            </div>
+          </div>
+
+          <div id="authMessage" class="auth-message"></div>
+
+          <button type="submit" class="btn btn-primary btn-full pro-submit-btn" id="submitBtn">
+            Sign In as CUSTOMER →
+          </button>
+        </form>
+
+        <div class="pro-auth-footer">
+          <span class="mono-text">RBAC v3.5 • FIREBASE + LOCAL HYBRID</span>
+          <span>Encrypted 30km District Session</span>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partner &amp; Admin Workspace — ZiloMarket</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="utility-bar">
+    <div class="container-fluid utility-inner">
+      <div class="location-pill">
+        <span class="pulse-dot"></span>
+        <span id="dashRoleBanner">ZiloMarket Role Workspace</span>
+      </div>
+      <div class="utility-links">
+        <a href="index.html" class="utility-link">← Back to 30km Live Marketplace</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="pro-app-shell">
+    <!-- REACTBITS LINE SIDEBAR FOR WORKSPACE -->
+    <aside class="line-sidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="brand-logo">
+          <div class="logo-mark">Z</div>
+          <div class="logo-text">
+            <span class="brand-name">ZiloMarket</span>
+            <span class="brand-tag" id="dashSubTag">CONSOLE</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">WORKSPACE NAVIGATION</span>
+        <div class="line-nav-track" id="dashLineNav">
+          <div class="line-indicator" id="dashLineIndicator"></div>
+          <button class="line-nav-item active" data-view="vendor" id="navBtnVendor">
+            <span>📦 Vendor Catalog Manager</span>
+          </button>
+          <button class="line-nav-item" data-view="admin" id="navBtnAdmin">
+            <span>🛡️ Team / Admin Verification</span>
+          </button>
+          <a href="index.html" class="line-nav-item">
+            <span>🌐 Live 30km Storefront</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="sidebar-cta-box">
+        <button id="dashLogoutBtn" class="btn btn-outline btn-full">Sign Out of Portal</button>
+      </div>
+    </aside>
+
+    <!-- RIGHT WORKSPACE -->
+    <div class="pro-viewport">
+      <main class="dashboard-main">
+
+        <!-- BUSINESS / VENDOR PANEL -->
+        <section id="vendorWorkspace" class="dash-section">
+          <div class="dash-header">
+            <span class="eyebrow-badge">VENDOR INVENTORY MANAGER</span>
+            <h2>Manage Your Sasta Price Catalog</h2>
+            <p>Add products and wholesale rates so buyers within 30 km can compare and order on WhatsApp.</p>
+          </div>
+
+          <div class="dash-grid">
+            <div class="dash-card">
+              <h3>+ Add Product to Shop Catalog</h3>
+              <form id="addProductForm">
+                <div class="form-group">
+                  <label>Select Your Listed Shop</label>
+                  <select id="vendorShopSelect" required></select>
+                </div>
+
+                <div class="form-group">
+                  <label>Product / Item Name</label>
+                  <input type="text" id="prodName" required placeholder="e.g., 12-Inch Silver Laminated Plate (100 pcs)" />
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label>Your ZiloMarket Price (₹)</label>
+                    <input type="number" id="prodPrice" required placeholder="e.g., 65" />
+                  </div>
+                  <div class="form-group">
+                    <label>Normal Market MRP (₹)</label>
+                    <input type="number" id="prodMrp" required placeholder="e.g., 95" />
+                  </div>
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label>Unit / Pack Size</label>
+                    <input type="text" id="prodUnit" required placeholder="e.g., per packet" />
+                  </div>
+                  <div class="form-group">
+                    <label>Min. Order Qty (MOQ)</label>
+                    <input type="text" id="prodMoq" required placeholder="e.g., 10 packets" />
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">Publish Item to 30km Radar</button>
+              </form>
+            </div>
+
+            <div class="dash-card">
+              <h3>Live Products in Selected Shop</h3>
+              <div id="vendorCatalogList" class="catalog-admin-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TEAM & ADMIN OPERATIONS PANEL -->
+        <section id="adminWorkspace" class="dash-section" style="display: none;">
+          <div class="dash-header">
+            <span class="eyebrow-badge">OPERATIONS &amp; MODERATION</span>
+            <h2>30km Zone Verification &amp; Shop Control</h2>
+            <p>Approve local manufacturers and verify wholesale sellers inside the district hub.</p>
+          </div>
+
+          <div class="dash-card">
+            <h3>All Registered Businesses in 30km Radar</h3>
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Business Name</th>
+                    <th>Category</th>
+                    <th>Distance</th>
+                    <th>Starting Deal</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminShopTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZiloMarket — 30km Hyperlocal Price &amp; Shop Radar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Top Utility Strip -->
+  <div class="utility-bar">
+    <div class="container-fluid utility-inner">
+      <div class="location-pill">
+        <span class="pulse-dot"></span>
+        <span>Live Radar: <strong>30 km District Zone</strong> • Direct Factory &amp; Wholesale Rates</span>
+      </div>
+      <div class="utility-links">
+        <a href="login.html?role=business" class="utility-link">+ Register Shop / Factory</a>
+        <span class="divider">|</span>
+        <a href="dashboard.html" class="utility-link">Partner Workspace</a>
+        <span class="divider">|</span>
+        <a href="login.html?role=admin" class="utility-link">Admin Console</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App Shell: ReactBits Line Sidebar + Viewport -->
+  <div class="pro-app-shell">
+
+    <!-- REACTBITS LINE SIDEBAR COMPONENT -->
+    <aside class="line-sidebar" id="mainLineSidebar">
+      <div class="sidebar-brand">
+        <a href="index.html" class="brand-logo">
+          <div class="logo-mark">Z</div>
+          <div class="logo-text">
+            <span class="brand-name">ZiloMarket</span>
+            <span class="brand-tag">30KM RADAR</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Section 1: 30km Categories with Gliding Line Indicator -->
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">MARKETPLACE CATEGORIES</span>
+        <div class="line-nav-track" id="categoryLineNav">
+          <!-- The animated sliding line indicator -->
+          <div class="line-indicator" id="catLineIndicator"></div>
+
+          <button class="line-nav-item active" data-cat="all">
+            <span>All Nearby Shops</span>
+            <span class="mono-badge" id="badgeAll">4</span>
+          </button>
+          <button class="line-nav-item" data-cat="Manufacturing & Disposables">
+            <span>Paper Plates &amp; Disposables</span>
+            <span class="mono-badge">Factory</span>
+          </button>
+          <button class="line-nav-item" data-cat="Wholesale Grocery">
+            <span>Wholesale Kirana &amp; Oil</span>
+            <span class="mono-badge">Bulk</span>
+          </button>
+          <button class="line-nav-item" data-cat="Hardware & Building">
+            <span>Hardware, Pipes &amp; Cement</span>
+            <span class="mono-badge">Deal</span>
+          </button>
+          <button class="line-nav-item" data-cat="Electronics & Services">
+            <span>Electronics &amp; Local Services</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Section 2: Quick Portal Switcher -->
+      <div class="sidebar-group">
+        <span class="sidebar-group-label">ROLE PORTALS</span>
+        <div class="line-nav-track" id="portalLineNav">
+          <div class="line-indicator" id="portalLineIndicator"></div>
+          <a href="index.html" class="line-nav-item active">
+            <span>Customer Price Finder</span>
+          </a>
+          <a href="login.html?role=business" class="line-nav-item">
+            <span>Business Seller Portal</span>
+          </a>
+          <a href="login.html?role=team" class="line-nav-item">
+            <span>ZiloMarket Team Verify</span>
+          </a>
+          <a href="login.html?role=admin" class="line-nav-item">
+            <span>Admin Superconsole</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Sidebar Footer Card -->
+      <div class="sidebar-cta-box">
+        <span class="cta-eyebrow">OWN A LOCAL SHOP?</span>
+        <p>List your wholesale or factory prices inside the 30km radar for free.</p>
+        <a href="login.html?role=business" class="btn btn-primary btn-full">+ Add Your Business</a>
+      </div>
+    </aside>
+
+    <!-- RIGHT WORKSPACE VIEWPORT -->
+    <div class="pro-viewport">
+
+      <!-- Sticky Top Search & Filter Bar -->
+      <header class="pro-topbar">
+        <div class="search-bar-wrap">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Search 'paper plates', 'dona', 'rice', 'PVC pipe'..." 
+          />
+          <select id="radiusFilter" class="radius-select">
+            <option value="30">Within 30 km</option>
+            <option value="15">Within 15 km</option>
+            <option value="5">Within 5 km</option>
+          </select>
+        </div>
+
+        <div class="topbar-right">
+          <div class="sort-box">
+            <label for="sortSelect">Sort:</label>
+            <select id="sortSelect">
+              <option value="nearest">📍 Nearest First</option>
+              <option value="cheapest">₹ Lowest Sasta Price</option>
+            </select>
+          </div>
+          <div id="authStatusArea">
+            <a href="login.html" class="btn btn-primary">Sign In</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Bento Hero Strip -->
+      <section class="pro-bento-hero">
+        <div class="bento-main">
+          <span class="eyebrow-badge">UI/UX PRO MAX • 30KM HYPERLOCAL ENGINE</span>
+          <h1>Find what is available nearby &amp; who sells it cheapest.</h1>
+          <p>Compare direct factory rates (like <strong>Puthal Paper Plate Manufacturing</strong>) and wholesale shops across your 30 km district radius.</p>
+        </div>
+        <div class="bento-stats">
+          <div class="stat-card">
+            <span class="stat-num mono-text" id="totalShopsCount">4</span>
+            <span class="stat-label">Verified Sellers</span>
+          </div>
+          <div class="stat-card highlight">
+            <span class="stat-num mono-text">0%</span>
+            <span class="stat-label">Middleman Fee</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Directory Grid Section -->
+      <main class="directory-section">
+        <div class="section-head">
+          <div>
+            <h2 id="activeCategoryTitle">All Nearby Businesses &amp; Factory Outlets</h2>
+            <span class="results-count" id="resultsCount">Scanning 30km radius...</span>
+          </div>
+        </div>
+
+        <div class="shop-grid" id="shopGrid">
+          <!-- Populated dynamically by js/app.js -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Slide-Over Shop Price Catalog Drawer -->
+  <div class="drawer-backdrop" id="catalogBackdrop"></div>
+  <aside class="catalog-drawer" id="catalogDrawer" aria-hidden="true">
+    <div class="drawer-header">
+      <div>
+        <span class="cat-tag" id="drawerShopCategory">CATEGORY</span>
+        <h3 id="drawerShopName">Shop Name</h3>
+        <p id="drawerShopMeta" class="drawer-meta">Location • Distance</p>
+      </div>
+      <button class="drawer-close" id="closeDrawerBtn" aria-label="Close panel">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <div class="drawer-notice">
+        <span>💡 <strong>Direct Local Rates:</strong> Mention <em>"ZiloMarket"</em> when ordering to get these wholesale prices.</span>
+      </div>
+      <div id="drawerProductList" class="drawer-product-list"></div>
+    </div>
+
+    <div class="drawer-footer">
+      <a href="#" id="drawerWhatsappBtn" target="_blank" class="btn btn-emerald btn-full">
+        💬 Order / Enquire Directly on WhatsApp
+      </a>
+    </div>
+  </aside>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
